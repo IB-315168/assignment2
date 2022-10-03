@@ -2,7 +2,7 @@
 SDJ3 Assignment 2
 ## Description
 Implementation of slaughter house in form of RESTful web service.
-## Requirments - Part 2
+## Requirements - Part 2
 1. Service has to store data about animals:
   - registration number
   - date
