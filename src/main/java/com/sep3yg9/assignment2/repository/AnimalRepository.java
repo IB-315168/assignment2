@@ -1,9 +1,9 @@
 package com.sep3yg9.assignment2.repository;
 
+import com.fasterxml.jackson.databind.DatabindException;
 import com.sep3yg9.assignment2.model.Animal;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class AnimalRepository
 {
@@ -24,5 +24,27 @@ public class AnimalRepository
     }
 
     return animals.put(id, new Animal(id, weight, origin));
+  }
+
+  public static Animal getAnimal(long regNumber){
+    return animals.get(regNumber);
+  }
+
+  public static ArrayList<Animal> getAnimalsDate(Date date){
+    var listOfAnimal = new ArrayList<Animal>();
+    animals.forEach((key, value) -> {
+      if(value.getArrivedOn().equals(date))
+        listOfAnimal.add(value);
+    });
+    return listOfAnimal;
+  }
+
+  public static ArrayList<Animal> getAnimalsByOrigin(String origin){
+    var listOfAnimal = new ArrayList<Animal>();
+    animals.forEach((key, value) -> {
+      if(value.getOrigin().equals(origin))
+        listOfAnimal.add(value);
+    });
+    return listOfAnimal;
   }
 }
