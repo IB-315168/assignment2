@@ -26,9 +26,7 @@ public class AnimalRepository
     animals.put(id, new Animal(id, weight, origin));
     return animals.get(id) ;
   }
-  public static Map<Long,Animal> getAllAnimals(){
-    return animals;
-  }
+
   public static Animal getAnimal(long regNumber){
     return animals.get(regNumber);
   }

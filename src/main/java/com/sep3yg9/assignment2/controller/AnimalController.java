@@ -26,10 +26,6 @@ public class AnimalController
   public Animal createOrder(@RequestBody Animal animal) {
     return AnimalRepository.create(animal.getWeight(), animal.getOrigin());
   }
-  @RequestMapping(value="/all",method = RequestMethod.GET)
-  public Map<Long,Animal>getAllAnimals(){
-    return AnimalRepository.getAllAnimals();
-  }
   @RequestMapping(value="/get/{regNumber}", method = RequestMethod.GET)
   public Animal getAnimal(@PathVariable long regNumber){
     return AnimalRepository.getAnimal(regNumber);
