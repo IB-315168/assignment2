@@ -2,6 +2,7 @@ package com.sep3yg9.assignment2.model;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Calendar;
 
 public class Animal
 {
@@ -26,7 +27,6 @@ public class Animal
   {
     return arrivedOn;
   }
-
   public void setArrivedOn(Date arrivedOn)
   {
     this.arrivedOn = arrivedOn;

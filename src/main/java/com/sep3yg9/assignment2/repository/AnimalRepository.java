@@ -20,12 +20,15 @@ public class AnimalRepository
   public static Animal create(double weight, String origin) {
     long id = 1L;
     if(!animals.isEmpty()) {
-      id = (long) animals.keySet().toArray()[animals.keySet().size() - 1];
+      id = (long) animals.keySet().toArray()[animals.keySet().size() -1]+1;
     }
 
-    return animals.put(id, new Animal(id, weight, origin));
+    animals.put(id, new Animal(id, weight, origin));
+    return animals.get(id) ;
   }
-
+  public static Map<Long,Animal> getAllAnimals(){
+    return animals;
+  }
   public static Animal getAnimal(long regNumber){
     return animals.get(regNumber);
   }
