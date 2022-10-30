@@ -1,0 +1,40 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+option java_multiple_files = true;
+package com.sep3yg9.assignment2.grpc.protobuf.parts;
+
+message Part {
+  int64 id = 1;
+  int64 animal_id = 2;
+  string type = 3;
+  double weight = 4;
+}
+
+message Tray {
+  int64 id = 1;
+  double max_weight = 2;
+  bool finished = 3;
+  string type = 4;
+  repeated Part parts = 5;
+}
+
+message TrayList {
+  repeated Tray trays = 1;
+}
+
+message PartList {
+  repeated Part parts = 1;
+}
+
+message PartTray {
+  int64 partId = 1;
+  int64 trayId = 2;
+}
+
+service PartService {
+  rpc GetAllTrays(google.protobuf.Empty) returns (TrayList);
+  rpc GetAllRemainingParts(google.protobuf.Empty) returns (PartList);
+  rpc PutOnTray(PartTray) returns (Tray);
+  rpc TrayFinished(google.protobuf.Int64Value) returns (Tray);
+}
