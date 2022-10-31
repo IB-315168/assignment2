@@ -7,14 +7,16 @@ import com.sep3yg9.assignment2.grpc.protobuf.products.Product;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Product {
+public class ProductEntity {
     private long id;
     private ArrayList<TOCEntryEntity> tableOfContents;
 
     private String type;
 
-    private boolean finished=true;
-    public Product(long id,String type) {
+    private boolean finished;
+    private ArrayList<PartEntity> parts;
+
+    public ProductEntity(long id, String type) {
         this.id = id;
         this.type = type;
         this.finished = false;

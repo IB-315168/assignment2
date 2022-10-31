@@ -15,9 +15,6 @@ import java.util.Map;
 @Repository
 public class TrayRespository
 {
-    //put into tray
-    //maximum capacity of tray
-    //full tray as a 'history'
 
     @Autowired
     private PartRepository partRepository;
@@ -54,7 +51,6 @@ public class TrayRespository
             partRepository.removePart(part);
         } else {
             if(!trayChecks(tray, part1)) {
-//                throw new Exception("One of the checks failed, verify tray weight and part type");
                 System.out.println("One of the checks failed, verify tray weight and part type");
             } else {
                 trays.get(tray).addPart(part1);
