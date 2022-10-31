@@ -2,7 +2,7 @@ package com.sep3yg9.assignment2.repository;
 
 import com.sep3yg9.assignment2.grpc.protobuf.products.Product;
 import com.sep3yg9.assignment2.grpc.protobuf.trays.Tray;
-import com.sep3yg9.assignment2.model.ProductEntity;
+import com.sep3yg9.assignment2.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
