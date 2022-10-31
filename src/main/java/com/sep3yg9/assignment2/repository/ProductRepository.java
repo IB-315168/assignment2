@@ -1,5 +1,7 @@
 package com.sep3yg9.assignment2.repository;
 
+import com.sep3yg9.assignment2.grpc.protobuf.parts.Part;
+import com.sep3yg9.assignment2.grpc.protobuf.products.AnimalList;
 import com.sep3yg9.assignment2.grpc.protobuf.products.Product;
 import com.sep3yg9.assignment2.grpc.protobuf.trays.Tray;
 import com.sep3yg9.assignment2.model.*;
@@ -99,6 +101,18 @@ public class ProductRepository {
         } else {
             System.out.println("Product is already finished");
         }
+    }
+
+    //re-format after intro of persistence
+    public List<Long> getProductsAnimals(long id) {
+        List<Long> ids = new ArrayList<>();
+        ProductEntity product = products.get(id);
+
+        for(PartEntity part : product.getParts()) {
+            ids.add(part.getAnimal_id());
+        }
+
+        return ids;
     }
 
     private void trayCheck(long id) {
