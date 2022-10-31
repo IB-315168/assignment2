@@ -65,16 +65,32 @@ public class TrayRespository
         return trays.get(tray);
     }
 
-    public List<Tray> getAllTrays() {
+    public List<Tray> getAllTrays(boolean finished) {
         List<Tray> trays1 = new ArrayList<>();
         for(long id : trays.keySet()) {
-            trays1.add(trays.get(id).convertToTray());
+            if(trays.get(id).isFinished() == finished) {
+                trays1.add(trays.get(id).convertToTray());
+            }
         }
         return trays1;
     }
 
+    public void trayFinished(long idTray) {
+        if(!trays.get(idTray).isFinished()) {
+            trays.get(idTray).setFinished(true);
+            //serialize tray
+        }
+        else {
+            System.out.println("Tray is already finished.");
+        }
+    }
+
     private boolean trayChecks(long id, PartEntity part) {
         TrayEntity tray = trays.get(id);
+
+        if(tray.isFinished()) {
+            return false;
+        }
 
         if(!tray.getType().equals(part.getType())) {
             return false;

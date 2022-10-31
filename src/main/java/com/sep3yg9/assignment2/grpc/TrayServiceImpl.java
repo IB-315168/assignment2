@@ -35,7 +35,7 @@ public class TrayServiceImpl extends TrayServiceGrpc.TrayServiceImplBase {
     @Override
     public void getAllTrays(Empty request, StreamObserver<TrayList> responseObserver) {
         TrayList trayList = TrayList.newBuilder()
-                .addAllTrays(trayRespository.getAllTrays())
+                .addAllTrays(trayRespository.getAllTrays(false))
                 .build();
         responseObserver.onNext(trayList);
         responseObserver.onCompleted();

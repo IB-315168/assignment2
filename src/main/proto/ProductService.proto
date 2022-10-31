@@ -9,7 +9,9 @@ package com.sep3yg9.assignment2.grpc.protobuf.products;
 message Product {
   int64 id = 1;
   string productType = 2;
-  repeated protobuf.parts.PartTray toc = 3;
+  bool finished = 3;
+  repeated protobuf.parts.PartTray toc = 4;
+  repeated protobuf.parts.Part parts = 5;
 }
 
 message ProductList {
