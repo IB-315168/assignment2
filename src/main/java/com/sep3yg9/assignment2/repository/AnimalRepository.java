@@ -1,6 +1,7 @@
 package com.sep3yg9.assignment2.repository;
 
 import com.fasterxml.jackson.databind.DatabindException;
+import com.sep3yg9.assignment2.misc.CreateParts;
 import com.sep3yg9.assignment2.model.Animal;
 
 import java.util.*;
@@ -23,7 +24,8 @@ public class AnimalRepository
       id = (long) animals.keySet().toArray()[animals.keySet().size() -1]+1;
     }
     animals.put(id, new Animal(id, weight, origin));
-    return animals.get(id) ;
+    CreateParts.cutIntoParts(animals.get(id));
+    return animals.get(id);
   }
 
   public static Animal getAnimal(long regNumber){
