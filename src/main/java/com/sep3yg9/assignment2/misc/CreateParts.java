@@ -16,7 +16,7 @@ public class CreateParts
     private static final Map<Long, Part> parts = new HashMap<>();
 
     public enum Parts{
-        TORSO(50), FRONT_LEGS(25), BACK_LEGS(25);
+        TORSO(50), FRONT_LEGS(25), BACK_LEGS(35);
 
         private int weight;
         Parts(int weight) {
@@ -25,15 +25,16 @@ public class CreateParts
 
     }
 
-    public static Part cutIntoParts(Animal animal){
+    public static void cutIntoParts(Animal animal){
         long id = 1L;
         if(!parts.isEmpty()){
             id = (long) parts.keySet().toArray()[parts.keySet().size() -1]+1;
         }
-        parts.put(id, new Part(id,animal.getRegNumber(),Parts.TORSO.name(),Parts.TORSO.weight));
-        //parts.put(id, new Part(id,animal.getRegNumber(),Parts.FRONT_LEGS.name(),Parts.FRONT_LEGS.weight));
-        //parts.put(id, new Part(id,animal.getRegNumber(),Parts.BACK_LEGS.name(), Parts.FRONT_LEGS.weight));
-        return parts.get(id);
+        parts.put(id, new Part(id,animal.getRegNumber(),Parts.TORSO.name(),(Parts.TORSO.weight * animal.getWeight())/100));
+        id++;
+        parts.put(id, new Part(id,animal.getRegNumber(),Parts.FRONT_LEGS.name(),(Parts.FRONT_LEGS.weight * animal.getWeight())/100));
+        id++;
+        parts.put(id, new Part(id,animal.getRegNumber(),Parts.BACK_LEGS.name(), (Parts.BACK_LEGS.weight * animal.getWeight())/100));
     }
 
 
