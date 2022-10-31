@@ -40,8 +40,24 @@ public class ProductEntity {
         tableOfContents.add(entry);
     }
 
-    public boolean isFinished(long productId){
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
+
+    public boolean isFinished(){
         return finished;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public ArrayList<PartEntity> getParts() {
+        return parts;
+    }
+
+    public void setParts(ArrayList<PartEntity> parts) {
+        this.parts = parts;
     }
 
     public Product convertToProduct() {

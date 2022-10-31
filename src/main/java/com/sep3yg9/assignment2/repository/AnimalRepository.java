@@ -3,9 +3,11 @@ package com.sep3yg9.assignment2.repository;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.sep3yg9.assignment2.misc.CreateParts;
 import com.sep3yg9.assignment2.model.Animal;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+@Repository
 public class AnimalRepository
 {
   private static final Map<Long, Animal> animals = new HashMap<>();

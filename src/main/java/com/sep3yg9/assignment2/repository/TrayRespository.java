@@ -81,6 +81,27 @@ public class TrayRespository
         }
     }
 
+    public void trayUnfinished(long idTray) {
+        if(trays.get(idTray).isFinished()) {
+            trays.get(idTray).setFinished(false);
+        }
+        else {
+            System.out.println("Tray is not finished.");
+        }
+    }
+
+    public long removeFromTray(PartEntity part) {
+        for(long id : trays.keySet()) {
+            if(trays.get(id).isFinished()) {
+                if(trays.get(id).getParts().contains(part)) {
+                    trays.get(id).getParts().remove(part);
+                    return id;
+                }
+            }
+        }
+        return 0;
+    }
+
     private boolean trayChecks(long id, PartEntity part) {
         TrayEntity tray = trays.get(id);
 
