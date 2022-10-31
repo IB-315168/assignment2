@@ -8,6 +8,8 @@ import com.sep3yg9.assignment2.grpc.protobuf.parts.Tray;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
+import java.util.Scanner;
+
 public class TestClient
 {
     public static void main(String[] args) {
@@ -16,8 +18,13 @@ public class TestClient
                 .build();
 
         PartServiceGrpc.PartServiceBlockingStub stub = PartServiceGrpc.newBlockingStub(channel);
-
-        System.out.println("Parts");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("type in weight");
+        double weight = Double.parseDouble(scanner.nextLine());
+        System.out.println("type in type");
+        String type = scanner.nextLine();
+        Tray tray=stub.createTray(Tray.newBuilder().setMaxWeight(weight).setFinished(false).setType(type).build());
+        System.out.println("tray "+tray );
 
     }
 }

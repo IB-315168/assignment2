@@ -33,8 +33,10 @@ message PartTray {
 }
 
 service PartService {
+  rpc CreateTray(Tray) returns (Tray);
   rpc GetAllTrays(google.protobuf.Empty) returns (TrayList);
   rpc GetAllRemainingParts(google.protobuf.Empty) returns (PartList);
   rpc PutOnTray(PartTray) returns (Tray);
   rpc TrayFinished(google.protobuf.Int64Value) returns (Tray);
+
 }
