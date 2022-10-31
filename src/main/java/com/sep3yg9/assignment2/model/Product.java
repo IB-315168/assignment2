@@ -6,8 +6,12 @@ public class Product {
     private long id;
     private ArrayList<TOCEntry> tableOfContents;
 
-    public Product(long id) {
+    private String type;
+
+    private boolean finished=true;
+    public Product(long id,String type) {
         this.id = id;
+        this.type = type;
         this.tableOfContents = new ArrayList<TOCEntry>();
     }
 
@@ -25,5 +29,12 @@ public class Product {
 
     public void addContent(TOCEntry entry){
         tableOfContents.add(entry);
+    }
+
+    public boolean isFinished(long productId){
+        if (finished==true){
+            return true;
+        }
+        else return false;
     }
 }

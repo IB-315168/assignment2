@@ -32,9 +32,10 @@ public class TrayRespository
     }
 
     public static Tray putPartIntoTray(Tray idTray, Part idPart){
-
         if(!trays.isEmpty()){
-            trays.get(id).setType(idPart.getType());
+            trays.get(idTray).setType(idPart.getType());
+            trays.get(idTray).addPart(idPart);
         }
+        return trays.get(idTray);
     }
 }
