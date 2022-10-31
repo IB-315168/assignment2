@@ -2,7 +2,9 @@ package com.sep3yg9.assignment2.grpc;
 
 import com.google.protobuf.Empty;
 import com.sep3yg9.assignment2.grpc.protobuf.parts.PartServiceGrpc;
-import com.sep3yg9.assignment2.grpc.protobuf.parts.TrayList;
+import com.sep3yg9.assignment2.grpc.protobuf.trays.Tray;
+import com.sep3yg9.assignment2.grpc.protobuf.trays.TrayList;
+import com.sep3yg9.assignment2.grpc.protobuf.trays.TrayServiceGrpc;
 import com.sep3yg9.assignment2.model.TrayEntity;
 import com.sep3yg9.assignment2.repository.PartRepository;
 import com.sep3yg9.assignment2.repository.TrayRespository;
@@ -11,14 +13,14 @@ import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @GRpcService
-public class PartServiceImpl extends PartServiceGrpc.PartServiceImplBase {
+public class TrayServiceImpl extends TrayServiceGrpc.TrayServiceImplBase {
     @Autowired
     private PartRepository partRepository;
     @Autowired
     private TrayRespository trayRespository;
 
     @Override
-    public void createTray(com.sep3yg9.assignment2.grpc.protobuf.parts.Tray tray, StreamObserver<com.sep3yg9.assignment2.grpc.protobuf.parts.Tray> responseObserver) {
+    public void createTray(Tray tray, StreamObserver<Tray> responseObserver) {
         TrayEntity trayCreated = trayRespository.createTray(tray.getMaxWeight(), tray.getFinished(), tray.getType());
         responseObserver.onNext(trayCreated.convertToTray());
         responseObserver.onCompleted();
