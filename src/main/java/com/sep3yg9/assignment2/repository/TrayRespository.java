@@ -51,4 +51,28 @@ public class TrayRespository
 
         return trays.get(tray.getId());
     }
+
+    public List<Tray> getAllTrays() {
+        List<Tray> trays1 = new ArrayList<>();
+        for(long id : trays.keySet()) {
+            trays1.add(trays.get(id).convertToTray());
+        }
+        return trays1;
+    }
+
+    private boolean trayChecks(long id, PartEntity part) {
+        TrayEntity tray = trays.get(id);
+
+        if(!tray.getType().equals(part.getType())) {
+            return false;
+        }
+
+        if(tray.getCarriedWeight() + part.getWeight() > tray.getMax_weight()) {
+            return false;
+        }
+
+        return true;
+    }
+
+
 }
