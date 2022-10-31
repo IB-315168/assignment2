@@ -1,10 +1,7 @@
 package com.sep3yg9.assignment2.testclient;
 
 import com.google.protobuf.Empty;
-import com.sep3yg9.assignment2.grpc.protobuf.parts.Part;
-import com.sep3yg9.assignment2.grpc.protobuf.parts.PartServiceGrpc;
-import com.sep3yg9.assignment2.grpc.protobuf.parts.PartTray;
-import com.sep3yg9.assignment2.grpc.protobuf.parts.Tray;
+import com.sep3yg9.assignment2.grpc.protobuf.parts.*;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
@@ -23,8 +20,11 @@ public class TestClient
         double weight = Double.parseDouble(scanner.nextLine());
         System.out.println("type in type");
         String type = scanner.nextLine();
-        Tray tray=stub.createTray(Tray.newBuilder().setMaxWeight(weight).setFinished(false).setType(type).build());
+        Tray tray = stub.createTray(Tray.newBuilder().setMaxWeight(weight).setFinished(false).setType(type).build());
         System.out.println("tray "+tray );
+        System.out.println("Overview of trays :");
+        TrayList trayList = stub.getAllTrays(Empty.newBuilder().build());
+        System.out.println(trayList);
 
     }
 }

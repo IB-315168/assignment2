@@ -1,20 +1,25 @@
 package com.sep3yg9.assignment2.model;
 
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.List;
 
-public class Tray {
+import com.sep3yg9.assignment2.grpc.protobuf.parts.Part;
+import com.sep3yg9.assignment2.grpc.protobuf.parts.Tray;
+
+public class TrayEntity {
     private long id;
     private double max_weight;
     private boolean finished;
     private String type;
-    private ArrayList<Part> parts;
+    private ArrayList<PartEntity> parts;
 
-    public Tray(long id, double max_weight, boolean finished, String type) {
+    public TrayEntity(long id, double max_weight, boolean finished, String type) {
         this.id = id;
         this.max_weight = max_weight;
         this.finished = finished;
         this.type = type;
-        parts = new ArrayList<Part>();
+        parts = new ArrayList<PartEntity>();
     }
 
     public long getId() {
@@ -49,21 +54,46 @@ public class Tray {
         this.type = type;
     }
 
-    public ArrayList<Part> getParts() {
+    public ArrayList<PartEntity> getParts() {
         return parts;
     }
 
-    public void addPart(Part p){
+    public void addPart(PartEntity p){
         this.parts.add(p);
     }
 
-    public void removePart(Part p){
+    public void removePart(PartEntity p){
         if(parts.contains(p)){
             if(parts.isEmpty())
                 type = p.getType();
             this.parts.remove(p);
         }else
             System.out.println("Part does not exist in the tray");
+    }
+
+    public Tray convertToTray() {
+        List<Part> trayParts = new ArrayList<>();
+        for(PartEntity part : parts) {
+            trayParts.add(part.convertToPart());
+        }
+
+        Tray tray = Tray.newBuilder()
+                .setId(id)
+                .setMaxWeight(max_weight)
+                .setFinished(finished)
+                .setType(type)
+                .addAllParts(trayParts)
+                .build();
+
+        return tray;
+    }
+
+    public double getCarriedWeight() {
+        double total = 0;
+        for(PartEntity part : parts) {
+            total += part.getWeight();
+        }
+        return total;
     }
 
 }
