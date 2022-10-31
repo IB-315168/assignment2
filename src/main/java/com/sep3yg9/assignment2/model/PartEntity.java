@@ -15,6 +15,13 @@ public class PartEntity {
         this.weight = weight;
     }
 
+    public PartEntity(Part part) {
+        this.id = part.getId();
+        this.animal_id = part.getAnimalId();
+        this.type = part.getType();
+        this.weight = part.getWeight();
+    }
+
     public long getId() {
         return id;
     }
