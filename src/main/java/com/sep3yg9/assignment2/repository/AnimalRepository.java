@@ -22,7 +22,6 @@ public class AnimalRepository
     if(!animals.isEmpty()) {
       id = (long) animals.keySet().toArray()[animals.keySet().size() -1]+1;
     }
-
     animals.put(id, new Animal(id, weight, origin));
     return animals.get(id) ;
   }
