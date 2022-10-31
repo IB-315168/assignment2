@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sep3yg9.assignment2.grpc.protobuf.parts.Part;
-import com.sep3yg9.assignment2.grpc.protobuf.parts.Tray;
+import com.sep3yg9.assignment2.grpc.protobuf.trays.Tray;
 
 public class TrayEntity {
     private long id;

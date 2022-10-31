@@ -11,18 +11,6 @@ message Part {
   double weight = 4;
 }
 
-message Tray {
-  int64 id = 1;
-  double max_weight = 2;
-  bool finished = 3;
-  string type = 4;
-  repeated Part parts = 5;
-}
-
-message TrayList {
-  repeated Tray trays = 1;
-}
-
 message PartList {
   repeated Part parts = 1;
 }
@@ -32,11 +20,8 @@ message PartTray {
   int64 trayId = 2;
 }
 
-service PartService {
-  rpc CreateTray(Tray) returns (Tray);
-  rpc GetAllTrays(google.protobuf.Empty) returns (TrayList);
+service PartService
+{
+  rpc CreatePart(Part) returns (Part);
   rpc GetAllRemainingParts(google.protobuf.Empty) returns (PartList);
-  rpc PutOnTray(PartTray) returns (Tray);
-  rpc TrayFinished(google.protobuf.Int64Value) returns (Tray);
-
 }

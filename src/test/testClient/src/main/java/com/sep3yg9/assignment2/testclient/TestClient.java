@@ -2,6 +2,7 @@ package com.sep3yg9.assignment2.testclient;
 
 import com.google.protobuf.Empty;
 import com.sep3yg9.assignment2.grpc.protobuf.parts.*;
+import com.sep3yg9.assignment2.grpc.protobuf.trays.*;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
@@ -14,7 +15,7 @@ public class TestClient
                 .usePlaintext()
                 .build();
 
-        PartServiceGrpc.PartServiceBlockingStub stub = PartServiceGrpc.newBlockingStub(channel);
+        TrayServiceGrpc.TrayServiceBlockingStub stub = TrayServiceGrpc.newBlockingStub(channel);
         Scanner scanner = new Scanner(System.in);
         System.out.println("type in weight");
         double weight = Double.parseDouble(scanner.nextLine());

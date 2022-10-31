@@ -4,6 +4,8 @@ package com.sep3yg9.assignment2.misc;
 import com.sep3yg9.assignment2.model.Animal;
 import com.sep3yg9.assignment2.model.PartEntity;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,14 +16,14 @@ public class CreateParts
 
     private static final Map<Long, PartEntity> parts = new HashMap<>();
 
-    public enum Parts{
+
+    public enum Parts {
         TORSO(50), FRONT_LEGS(25), BACK_LEGS(35);
 
-        private int weight;
+        private final int weight;
         Parts(int weight) {
             this.weight = weight;
         }
-
     }
 
     public static void cutIntoParts(Animal animal){
@@ -35,7 +37,5 @@ public class CreateParts
         id++;
         parts.put(id, new PartEntity(id,animal.getRegNumber(),Parts.BACK_LEGS.name(), (Parts.BACK_LEGS.weight * animal.getWeight())/100));
     }
-
-
 
 }
