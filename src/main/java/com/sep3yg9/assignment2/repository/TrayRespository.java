@@ -18,6 +18,8 @@ public class TrayRespository
 
     @Autowired
     private PartRepository partRepository;
+    @Autowired
+    private HistoryRepository historyRepository;
 
     private final Map<Long, TrayEntity> trays = new HashMap<>();
 
@@ -74,7 +76,7 @@ public class TrayRespository
     public void trayFinished(long idTray) {
         if(!trays.get(idTray).isFinished()) {
             trays.get(idTray).setFinished(true);
-            //serialize tray
+            historyRepository.addToTrayHistory(trays.get(idTray));
         }
         else {
             System.out.println("Tray is already finished.");

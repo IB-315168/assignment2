@@ -4,6 +4,7 @@ import com.sep3yg9.assignment2.grpc.protobuf.parts.Part;
 import com.sep3yg9.assignment2.grpc.protobuf.trays.Tray;
 import com.sep3yg9.assignment2.model.PartEntity;
 import com.sep3yg9.assignment2.model.TrayEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ import java.util.Map;
 @Repository
 public class PartRepository
 {
+    @Autowired
+    private HistoryRepository historyRepository;
     private final Map<Long, PartEntity> parts = new HashMap<>();
 
     public PartRepository() {
@@ -30,6 +33,7 @@ public class PartRepository
             id = (long) parts.keySet().toArray()[parts.keySet().size() -1]+1;
         }
         parts.put(id, new PartEntity(id, animal_id, type, weight));
+        historyRepository.addToPartHistory(parts.get(id));
         return parts.get(id);
     }
 

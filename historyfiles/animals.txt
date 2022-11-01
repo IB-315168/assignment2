@@ -1,0 +1,14 @@
+{
+  "1" : {
+    "regNumber" : 1,
+    "arrivedOn" : 1667257200000,
+    "weight" : 3500.0,
+    "origin" : "Horsens"
+  },
+  "2" : {
+    "regNumber" : 2,
+    "arrivedOn" : 1667257200000,
+    "weight" : 3500.0,
+    "origin" : "Horsens"
+  }
+}

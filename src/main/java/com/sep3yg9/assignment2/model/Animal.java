@@ -10,6 +10,11 @@ public class Animal
   private Date arrivedOn;
   private double weight;
   private String origin;
+
+  public Animal()
+  {
+  }
+
   public Animal(long regNumber, double weight, String origin) {
     this.regNumber = regNumber;
     this.weight = weight;

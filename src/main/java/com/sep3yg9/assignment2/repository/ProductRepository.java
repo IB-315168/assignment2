@@ -19,6 +19,8 @@ public class ProductRepository {
     private TrayRespository trayRespository;
     @Autowired
     private PartRepository partRepository;
+    @Autowired
+    private HistoryRepository historyRepository;
 
     private final Map<Long, ProductEntity> products = new HashMap<>();
 
@@ -98,6 +100,7 @@ public class ProductRepository {
     public void markProductAsFinished(long id) {
         if(!products.get(id).isFinished()) {
             products.get(id).setFinished(true);
+            historyRepository.addToProductHistory(products.get(id));
         } else {
             System.out.println("Product is already finished");
         }
