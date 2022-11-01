@@ -66,11 +66,7 @@ public class ProductRepository {
         if(products.get(product).getParts().size() > 0) {
             if(products.get(product).getType().equalsIgnoreCase("Same parts")) {
                 if(products.get(product).getParts().get(0).getType().equalsIgnoreCase(part1.getType())) {
-                    products.get(product).getParts().add(part1);
-                    idTray = trayRespository.removeFromTray(part1);
-                    products.get(product).getTableOfContents().add(new TOCEntryEntity(idTray, part));
-                    trayCheck(idTray);
-                    return products.get(product);
+                    return addHelper(product, part, part1, idTray);
                 } else {
                     System.out.println("This product requires same type of parts.");
                     return products.get(product);
@@ -82,18 +78,10 @@ public class ProductRepository {
                         return products.get(product);
                     }
                 }
-                products.get(product).getParts().add(part1);
-                idTray = trayRespository.removeFromTray(part1);
-                products.get(product).getTableOfContents().add(new TOCEntryEntity(idTray, part));
-                trayCheck(idTray);
-                return products.get(product);
+                return addHelper(product, part, part1, idTray);
             }
         } else {
-            products.get(product).getParts().add(part1);
-            idTray = trayRespository.removeFromTray(part1);
-            products.get(product).getTableOfContents().add(new TOCEntryEntity(idTray, part));
-            trayCheck(idTray);
-            return products.get(product);
+            return addHelper(product, part, part1, idTray);
         }
     }
 
@@ -106,21 +94,19 @@ public class ProductRepository {
         }
     }
 
-    //re-format after intro of persistence
-    public List<Long> getProductsAnimals(long id) {
-        List<Long> ids = new ArrayList<>();
-        ProductEntity product = products.get(id);
-
-        for(PartEntity part : product.getParts()) {
-            ids.add(part.getAnimal_id());
+    private ProductEntity addHelper(long product, long part, PartEntity part1, long idTray) {
+        if(trayRespository.getAllTrays(true).get((int) idTray).getPartsList().contains(part1.convertToPart())) {
+            System.out.println("Part is unavailable, make sure that tray with that part is finished.");
         }
 
-        return ids;
-    }
+        products.get(product).getParts().add(part1);
+        idTray = trayRespository.removeFromTray(part1);
+        products.get(product).getTableOfContents().add(new TOCEntryEntity(idTray, part));
 
-    private void trayCheck(long id) {
-        if(trayRespository.getAllTrays(true).get((int) id).getPartsList().size() == 0) {
-            trayRespository.trayUnfinished(id);
+        if(trayRespository.getAllTrays(true).get((int) idTray).getPartsList().size() == 0) {
+            trayRespository.trayUnfinished(idTray);
         }
+
+        return products.get(product);
     }
 }
