@@ -2,6 +2,8 @@ package com.sep3yg9.assignment2.model;
 
 import com.sep3yg9.assignment2.grpc.protobuf.parts.Part;
 
+import java.util.Objects;
+
 public class PartEntity {
     private long id;
     private long animal_id;
@@ -62,5 +64,22 @@ public class PartEntity {
                 .setWeight(weight)
                 .build();
         return part;
+    }
+
+    @Override public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        PartEntity that = (PartEntity) o;
+        return id == that.id && animal_id == that.animal_id
+            && Double.compare(that.weight, weight) == 0 && Objects.equals(type,
+            that.type);
+    }
+
+    @Override public int hashCode()
+    {
+        return Objects.hash(id, animal_id, type, weight);
     }
 }

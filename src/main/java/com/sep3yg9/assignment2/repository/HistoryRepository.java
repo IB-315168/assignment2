@@ -11,7 +11,9 @@ import org.springframework.stereotype.Repository;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository public class HistoryRepository
@@ -66,6 +68,36 @@ import java.util.Map;
   public Map<Long, ProductEntity> getProducts()
   {
     return products;
+  }
+
+  public List<Long> getProductsAnimals(long id) {
+    List<Long> animalIds = new ArrayList<>();
+    ProductEntity product = products.get(id);
+
+    for(PartEntity part : product.getParts()) {
+      animalIds.add(part.getAnimal_id());
+    }
+
+    return animalIds;
+  }
+
+  public List<ProductEntity> getAnimalsProducts(long id) {
+    List<ProductEntity> productEntityList = new ArrayList<>();
+
+    List<PartEntity> selectedParts = new ArrayList<>();
+    for(long idPart : parts.keySet()) {
+      if(parts.get(idPart).getAnimal_id() == id) {
+        selectedParts.add(parts.get(idPart));
+      }
+    }
+
+    for(long idProduct : products.keySet()) {
+      if(products.get(idProduct).getParts().stream().anyMatch(selectedParts::contains)) {
+        productEntityList.add(products.get(idProduct));
+      }
+    }
+
+    return productEntityList;
   }
 
   private void initDataSource()

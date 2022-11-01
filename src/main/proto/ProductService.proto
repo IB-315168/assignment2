@@ -33,6 +33,4 @@ service ProductService {
   rpc CreateProduct(google.protobuf.StringValue) returns (Product);
   rpc PutIntoProduct(PartProduct) returns (Product);
   rpc MarkProductAsFinished(google.protobuf.Int64Value) returns (Product);
-  rpc GetProductsAnimals(google.protobuf.Int64Value) returns (AnimalList);
-  rpc GetAnimalsProducts(google.protobuf.Int64Value) returns (ProductList);
 }
