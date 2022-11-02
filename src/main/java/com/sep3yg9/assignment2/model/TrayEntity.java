@@ -14,6 +14,10 @@ public class TrayEntity {
     private String type;
     private ArrayList<PartEntity> parts;
 
+    public TrayEntity()
+    {
+    }
+
     public TrayEntity(long id, double max_weight, boolean finished, String type) {
         this.id = id;
         this.max_weight = max_weight;

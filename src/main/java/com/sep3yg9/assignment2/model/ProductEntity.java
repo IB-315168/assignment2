@@ -16,6 +16,10 @@ public class ProductEntity {
     private boolean finished;
     private ArrayList<PartEntity> parts;
 
+    public ProductEntity()
+    {
+    }
+
     public ProductEntity(long id, String type) {
         this.id = id;
         this.type = type;

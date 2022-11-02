@@ -1,1 +1,20 @@
-{ }
+{
+  "1" : {
+    "id" : 1,
+    "animal_id" : 1,
+    "type" : "TORSO",
+    "weight" : 1000.0
+  },
+  "2" : {
+    "id" : 2,
+    "animal_id" : 1,
+    "type" : "TORSO",
+    "weight" : 1900.0
+  },
+  "3" : {
+    "id" : 3,
+    "animal_id" : 1,
+    "type" : "TORSO",
+    "weight" : 1000.0
+  }
+}

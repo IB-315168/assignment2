@@ -6,6 +6,10 @@ public class TOCEntryEntity {
     private long tray;
     private long part;
 
+    public TOCEntryEntity()
+    {
+    }
+
     public TOCEntryEntity(long tray_Id, long part_Id) {
         this.tray = tray_Id;
         this.part = part_Id;

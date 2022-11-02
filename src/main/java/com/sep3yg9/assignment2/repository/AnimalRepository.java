@@ -6,6 +6,7 @@ import com.sep3yg9.assignment2.model.Animal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 
 @Repository
@@ -13,14 +14,15 @@ public class AnimalRepository
 {
   @Autowired
   private HistoryRepository historyRepository;
-  private final Map<Long, Animal> animals = new HashMap<>();
-
+//  private final Map<Long, Animal> animals = new HashMap<>();
+private Map<Long, Animal> animals = new HashMap<>();
   public AnimalRepository() {
-    initDataSource();
+//    initDataSource();
   }
 
+  @PostConstruct
   private void initDataSource() {
-
+    animals = historyRepository.getAnimals();
   }
 
   public Animal create(double weight, String origin) {

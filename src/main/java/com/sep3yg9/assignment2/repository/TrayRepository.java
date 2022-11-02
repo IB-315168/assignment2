@@ -6,6 +6,7 @@ import com.sep3yg9.assignment2.model.TrayEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,15 +24,19 @@ public class TrayRepository
     private Map<Long, TrayEntity> trays;
 
     public TrayRepository() {
-        initDataSource();
     }
 
     //We assume that trays properties won't change over time, i.e. maxWeight
+    @PostConstruct
     private void initDataSource() {
         Map<Long, TrayEntity> trayList = new HashMap<>();
-        for(long id : historyRepository.getTrays().keySet()) {
-            TrayEntity tray = historyRepository.getTrays().get(id).get(0);
-            trayList.put(id, new TrayEntity(id, tray.getMax_weight(), false, tray.getType()));
+        if(historyRepository.getTrays() != null && !historyRepository.getTrays().isEmpty()) {
+            for(long id : historyRepository.getTrays().keySet()) {
+                if(historyRepository.getTrays().get(id).size() != 0) {
+                    TrayEntity tray = historyRepository.getTrays().get(id).get(0);
+                    trayList.put(id, new TrayEntity(id, tray.getMax_weight(), false, tray.getType()));
+                }
+            }
         }
         trays = trayList;
     }
@@ -45,7 +50,7 @@ public class TrayRepository
 
     public TrayEntity putPartIntoTray(long tray, long part){
         PartEntity part1 = new PartEntity(partRepository.getPart(part));
-
+        System.out.println(trays.get(tray));
         if(trays.get(tray).getParts().size() == 0){
             if(!trayChecks(tray, part1)) {
                 System.out.println("One of the checks failed, verify tray weight and part type");

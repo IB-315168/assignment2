@@ -10,6 +10,10 @@ public class PartEntity {
     private String type;
     private double weight;
 
+    public PartEntity()
+    {
+    }
+
     public PartEntity(long id, long animal_id, String type, double weight) {
         this.id = id;
         this.animal_id = animal_id;
