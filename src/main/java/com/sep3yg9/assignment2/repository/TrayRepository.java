@@ -1,6 +1,5 @@
 package com.sep3yg9.assignment2.repository;
 
-import com.sep3yg9.assignment2.grpc.protobuf.parts.Part;
 import com.sep3yg9.assignment2.grpc.protobuf.trays.Tray;
 import com.sep3yg9.assignment2.model.PartEntity;
 import com.sep3yg9.assignment2.model.TrayEntity;
@@ -13,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class TrayRespository
+public class TrayRepository
 {
 
     @Autowired
@@ -21,22 +20,26 @@ public class TrayRespository
     @Autowired
     private HistoryRepository historyRepository;
 
-    private final Map<Long, TrayEntity> trays = new HashMap<>();
+    private Map<Long, TrayEntity> trays;
 
-    public TrayRespository() {
+    public TrayRepository() {
         initDataSource();
     }
 
+    //We assume that trays properties won't change over time, i.e. maxWeight
     private void initDataSource() {
-        //put file context for serialization
+        Map<Long, TrayEntity> trayList = new HashMap<>();
+        for(long id : historyRepository.getTrays().keySet()) {
+            TrayEntity tray = historyRepository.getTrays().get(id).get(0);
+            trayList.put(id, new TrayEntity(id, tray.getMax_weight(), false, tray.getType()));
+        }
+        trays = trayList;
     }
 
     public TrayEntity createTray(double maxWeight, boolean isFinished, String type){
-        long id = 1L;
-        if(!trays.isEmpty()){
-            id = (long) trays.keySet().toArray()[trays.keySet().size() -1]+1;
-        }
+        long id = historyRepository.getLastTrayId() + 1;
         trays.put(id, new TrayEntity(id, maxWeight, isFinished, type));
+        historyRepository.addNewTray(id);
         return trays.get(id);
     }
 
@@ -73,7 +76,7 @@ public class TrayRespository
         return trays1;
     }
 
-    public void trayFinished(long idTray) {
+    public Tray trayFinished(long idTray) {
         if(!trays.get(idTray).isFinished()) {
             trays.get(idTray).setFinished(true);
             historyRepository.addToTrayHistory(trays.get(idTray));
@@ -81,6 +84,8 @@ public class TrayRespository
         else {
             System.out.println("Tray is already finished.");
         }
+
+        return trays.get(idTray).convertToTray();
     }
 
     public void trayUnfinished(long idTray) {

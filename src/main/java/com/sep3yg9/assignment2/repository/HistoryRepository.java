@@ -20,10 +20,10 @@ import java.util.Map;
 {
   private Map<Long, Animal> animals = new HashMap<>();
   private Map<Long, PartEntity> parts = new HashMap<>();
-  private Map<Long, TrayEntity> trays = new HashMap<>();
+  private Map<Long, ArrayList<TrayEntity>> trays = new HashMap<>();
   private Map<Long, ProductEntity> products = new HashMap<>();
 
-  private ObjectMapper mapper = new ObjectMapper();
+  private final ObjectMapper mapper = new ObjectMapper();
 
   public HistoryRepository()
   {
@@ -40,8 +40,12 @@ import java.util.Map;
     saveChanges();
   }
 
+  public void addNewTray(long id) {
+    trays.put(id, new ArrayList<>());
+  }
+
   public void addToTrayHistory(TrayEntity entity) {
-    trays.put(entity.getId(), entity);
+    trays.get(entity.getId()).add(entity);
     saveChanges();
   }
 
@@ -60,7 +64,7 @@ import java.util.Map;
     return parts;
   }
 
-  public Map<Long, TrayEntity> getTrays()
+  public Map<Long, ArrayList<TrayEntity>> getTrays()
   {
     return trays;
   }
@@ -100,6 +104,21 @@ import java.util.Map;
     return productEntityList;
   }
 
+  public long getLastProductId() {
+    return products.keySet().size() - 1;
+  }
+
+  public long getLastPartId() {
+    return parts.keySet().size() - 1;
+  }
+
+  public long getLastTrayId() {
+    return trays.keySet().size() - 1;
+  }
+
+  public long getLastAnimalId() {
+    return animals.keySet().size() - 1;
+  }
   private void initDataSource()
   {
     try
@@ -140,7 +159,7 @@ import java.util.Map;
       if (!traysHistory.createNewFile())
       {
         trays = mapper.readValue(traysHistory,
-            new TypeReference<HashMap<Long, TrayEntity>>()
+            new TypeReference<HashMap<Long, ArrayList<TrayEntity>>>()
             {
             });
       }

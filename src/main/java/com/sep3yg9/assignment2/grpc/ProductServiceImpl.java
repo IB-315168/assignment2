@@ -1,7 +1,9 @@
 package com.sep3yg9.assignment2.grpc;
 
 import com.google.protobuf.Empty;
+import com.google.protobuf.Int64Value;
 import com.google.protobuf.StringValue;
+import com.sep3yg9.assignment2.grpc.protobuf.products.PartProduct;
 import com.sep3yg9.assignment2.grpc.protobuf.products.Product;
 import com.sep3yg9.assignment2.grpc.protobuf.products.ProductList;
 import com.sep3yg9.assignment2.grpc.protobuf.products.ProductServiceGrpc;
@@ -26,6 +28,23 @@ public class ProductServiceImpl extends ProductServiceGrpc.ProductServiceImplBas
         ProductEntity product = productRepository.createProduct(type.getValue());
 
         responseObserver.onNext(product.convertToProduct());
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void putIntoProduct(PartProduct request, StreamObserver<Product> responseObserver) {
+        Product product = productRepository.putPartIntoProduct(
+            request.getProductId(), request.getPartId()).convertToProduct();
+
+        responseObserver.onNext(product);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void markProductAsFinished(Int64Value request, StreamObserver<Product> responseObserver) {
+        Product product = productRepository.markProductAsFinished(request.getValue()).convertToProduct();
+
+        responseObserver.onNext(product);
         responseObserver.onCompleted();
     }
 

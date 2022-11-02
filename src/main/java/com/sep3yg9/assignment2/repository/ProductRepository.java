@@ -1,7 +1,5 @@
 package com.sep3yg9.assignment2.repository;
 
-import com.sep3yg9.assignment2.grpc.protobuf.parts.Part;
-import com.sep3yg9.assignment2.grpc.protobuf.products.AnimalList;
 import com.sep3yg9.assignment2.grpc.protobuf.products.Product;
 import com.sep3yg9.assignment2.grpc.protobuf.trays.Tray;
 import com.sep3yg9.assignment2.model.*;
@@ -16,7 +14,7 @@ import java.util.Map;
 @Repository
 public class ProductRepository {
     @Autowired
-    private TrayRespository trayRespository;
+    private TrayRepository trayRepository;
     @Autowired
     private PartRepository partRepository;
     @Autowired
@@ -38,16 +36,13 @@ public class ProductRepository {
             //rak, avoid
             return null;
         }
-        long id = 1L;
-        if (!products.isEmpty()) {
-            id = (long) products.keySet().toArray()[products.keySet().size() - 1] + 1;
-        }
+        long id = historyRepository.getLastProductId() + 1;
         products.put(id, new ProductEntity(id, type));
         return products.get(id);
     }
 
     public List<Tray> getFinishedTrays() {
-        return trayRespository.getAllTrays(true);
+        return trayRepository.getAllTrays(true);
     }
 
     public List<Product> getAllProducts() {
@@ -85,26 +80,28 @@ public class ProductRepository {
         }
     }
 
-    public void markProductAsFinished(long id) {
+    public ProductEntity markProductAsFinished(long id) {
         if(!products.get(id).isFinished()) {
             products.get(id).setFinished(true);
             historyRepository.addToProductHistory(products.get(id));
         } else {
             System.out.println("Product is already finished");
         }
+
+        return products.get(id);
     }
 
     private ProductEntity addHelper(long product, long part, PartEntity part1, long idTray) {
-        if(trayRespository.getAllTrays(true).get((int) idTray).getPartsList().contains(part1.convertToPart())) {
+        if(trayRepository.getAllTrays(true).get((int) idTray).getPartsList().contains(part1.convertToPart())) {
             System.out.println("Part is unavailable, make sure that tray with that part is finished.");
         }
 
         products.get(product).getParts().add(part1);
-        idTray = trayRespository.removeFromTray(part1);
+        idTray = trayRepository.removeFromTray(part1);
         products.get(product).getTableOfContents().add(new TOCEntryEntity(idTray, part));
 
-        if(trayRespository.getAllTrays(true).get((int) idTray).getPartsList().size() == 0) {
-            trayRespository.trayUnfinished(idTray);
+        if(trayRepository.getAllTrays(true).get((int) idTray).getPartsList().size() == 0) {
+            trayRepository.trayUnfinished(idTray);
         }
 
         return products.get(product);

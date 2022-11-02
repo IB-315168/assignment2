@@ -28,10 +28,7 @@ public class PartRepository
     }
 
     public PartEntity createPart(long animal_id, String type, double weight){
-        long id = 1L;
-        if(!parts.isEmpty()){
-            id = (long) parts.keySet().toArray()[parts.keySet().size() -1]+1;
-        }
+        long id = historyRepository.getLastPartId() + 1;
         parts.put(id, new PartEntity(id, animal_id, type, weight));
         historyRepository.addToPartHistory(parts.get(id));
         return parts.get(id);

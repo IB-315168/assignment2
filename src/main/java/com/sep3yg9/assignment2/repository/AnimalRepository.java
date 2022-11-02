@@ -24,10 +24,7 @@ public class AnimalRepository
   }
 
   public Animal create(double weight, String origin) {
-    long id = 1L;
-    if(!animals.isEmpty()) {
-      id = (long) animals.keySet().toArray()[animals.keySet().size() -1]+1;
-    }
+    long id = historyRepository.getLastAnimalId() + 1;
     animals.put(id, new Animal(id, weight, origin));
 //    CreateParts.cutIntoParts(animals.get(id));
     historyRepository.addToAnimalHistory(animals.get(id));
