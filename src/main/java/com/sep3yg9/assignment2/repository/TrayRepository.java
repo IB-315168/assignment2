@@ -77,7 +77,7 @@ public class TrayRepository
     }
 
     public Tray trayFinished(long idTray) {
-        if(!trays.get(idTray).isFinished()) {
+        if(!trays.get(idTray).isFinished() && trays.get(idTray).getParts().size() != 0) {
             trays.get(idTray).setFinished(true);
             historyRepository.addToTrayHistory(trays.get(idTray));
         }

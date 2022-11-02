@@ -81,9 +81,10 @@ public class ProductRepository {
     }
 
     public ProductEntity markProductAsFinished(long id) {
-        if(!products.get(id).isFinished()) {
+        if(!products.get(id).isFinished() && products.get(id).getParts().size() != 0) {
             products.get(id).setFinished(true);
             historyRepository.addToProductHistory(products.get(id));
+            return products.remove(id);
         } else {
             System.out.println("Product is already finished");
         }
@@ -100,6 +101,7 @@ public class ProductRepository {
         idTray = trayRepository.removeFromTray(part1);
         products.get(product).getTableOfContents().add(new TOCEntryEntity(idTray, part));
 
+        //TODO make get all trays get long instead of int
         if(trayRepository.getAllTrays(true).get((int) idTray).getPartsList().size() == 0) {
             trayRepository.trayUnfinished(idTray);
         }
