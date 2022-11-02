@@ -15,6 +15,7 @@ import java.util.Map;
 @Repository
 public class PartRepository
 {
+    @Autowired AnimalRepository animalRepository;
     @Autowired
     private HistoryRepository historyRepository;
     private final Map<Long, PartEntity> parts = new HashMap<>();
@@ -29,6 +30,10 @@ public class PartRepository
 
     public PartEntity createPart(long animal_id, String type, double weight){
         long id = historyRepository.getLastPartId() + 1;
+        if(animalRepository.getAnimal(animal_id) == null) {
+            System.out.println("Animal not found");
+            return null;
+        }
         parts.put(id, new PartEntity(id, animal_id, type, weight));
         historyRepository.addToPartHistory(parts.get(id));
         return parts.get(id);
