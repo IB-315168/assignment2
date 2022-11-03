@@ -20,15 +20,17 @@ public class TestClient
 
         Part part1 = partStub.createPart(Part.newBuilder().setAnimalId(1).setWeight(1900).setType("TORSO").build());
         System.out.println("Part created: " + part1);
-        part1 = partStub.createPart(Part.newBuilder().setAnimalId(1).setWeight(1000).setType("TORSO").build());
-        System.out.println("Part created: " + part1);
+        Part part2 = partStub.createPart(Part.newBuilder().setAnimalId(1).setWeight(1000).setType("TORSO").build());
+        System.out.println("Part created: " + part2);
         System.out.println("All parts: " + partStub.getAllRemainingParts(Empty.newBuilder().build()));
 
         Tray tray1 = trayStub.createTray(Tray.newBuilder().setMaxWeight(3000).setType("TORSO").build());
         System.out.println("Tray before: " + trayStub.getAllTrays(Empty.newBuilder().build()));
 
-        trayStub.putOnTray(PartTray.newBuilder().setPartId(1).setTrayId(1).build());
-        trayStub.putOnTray(PartTray.newBuilder().setPartId(2).setTrayId(1).build());
+        trayStub.putOnTray(PartTray.newBuilder().setPartId(part1.getId()).setTrayId(
+            tray1.getId()).build());
+        trayStub.putOnTray(PartTray.newBuilder().setPartId(part2.getId()).setTrayId(
+            tray1.getId()).build());
 
         System.out.println("Tray after: " + trayStub.getAllTrays(Empty.newBuilder().build()));
 //        Scanner scanner = new Scanner(System.in);

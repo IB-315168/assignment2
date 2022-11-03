@@ -63,7 +63,7 @@ public class PartEntity {
     public Part convertToPart() {
         Part part = Part.newBuilder()
                 .setId(id)
-                .setAnimalId(id)
+                .setAnimalId(animal_id)
                 .setType(type)
                 .setWeight(weight)
                 .build();
@@ -78,8 +78,7 @@ public class PartEntity {
             return false;
         PartEntity that = (PartEntity) o;
         return id == that.id && animal_id == that.animal_id
-            && Double.compare(that.weight, weight) == 0 && Objects.equals(type,
-            that.type);
+            && Double.compare(that.weight, weight) == 0 && type.equals(that.type);
     }
 
     @Override public int hashCode()

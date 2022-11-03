@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class TrayRepository
@@ -43,6 +40,9 @@ public class TrayRepository
 
     public TrayEntity createTray(double maxWeight, boolean isFinished, String type){
         long id = historyRepository.getLastTrayId() + 1;
+        if(trays.keySet().size() != 0 && Collections.max(trays.keySet()) > id) {
+            id = Collections.max(trays.keySet()) + 1;
+        }
         trays.put(id, new TrayEntity(id, maxWeight, isFinished, type));
         historyRepository.addNewTray(id);
         return trays.get(id);
@@ -50,7 +50,6 @@ public class TrayRepository
 
     public TrayEntity putPartIntoTray(long tray, long part){
         PartEntity part1 = new PartEntity(partRepository.getPart(part));
-        System.out.println(trays.get(tray));
         if(trays.get(tray).getParts().size() == 0){
             if(!trayChecks(tray, part1)) {
                 System.out.println("One of the checks failed, verify tray weight and part type");
@@ -102,16 +101,18 @@ public class TrayRepository
         }
     }
 
-    public long removeFromTray(PartEntity part) {
+    public TrayEntity removeFromTray(PartEntity part) {
         for(long id : trays.keySet()) {
             if(trays.get(id).isFinished()) {
                 if(trays.get(id).getParts().contains(part)) {
                     trays.get(id).getParts().remove(part);
-                    return id;
+                    return trays.get(id);
                 }
             }
         }
-        return 0;
+        TrayEntity tray = new TrayEntity();
+        tray.setId(-1);
+        return tray;
     }
 
     private boolean trayChecks(long id, PartEntity part) {
@@ -125,7 +126,7 @@ public class TrayRepository
             return false;
         }
 
-        if(tray.getCarriedWeight() + part.getWeight() > tray.getMax_weight()) {
+        if(tray.totalPartsWeight() + part.getWeight() > tray.getMax_weight()) {
             return false;
         }
 

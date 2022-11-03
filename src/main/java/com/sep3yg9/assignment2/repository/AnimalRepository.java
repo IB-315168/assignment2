@@ -27,6 +27,9 @@ private Map<Long, Animal> animals = new HashMap<>();
 
   public Animal create(double weight, String origin) {
     long id = historyRepository.getLastAnimalId() + 1;
+    if(animals.keySet().size() != 0 && Collections.max(animals.keySet()) > id) {
+      id = Collections.max(animals.keySet()) + 1;
+    }
     animals.put(id, new Animal(id, weight, origin));
 //    CreateParts.cutIntoParts(animals.get(id));
     historyRepository.addToAnimalHistory(animals.get(id));

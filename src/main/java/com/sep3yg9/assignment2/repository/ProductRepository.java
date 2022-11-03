@@ -1,15 +1,13 @@
 package com.sep3yg9.assignment2.repository;
 
+import com.sep3yg9.assignment2.grpc.protobuf.parts.Part;
 import com.sep3yg9.assignment2.grpc.protobuf.products.Product;
 import com.sep3yg9.assignment2.grpc.protobuf.trays.Tray;
 import com.sep3yg9.assignment2.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class ProductRepository {
@@ -36,7 +34,13 @@ public class ProductRepository {
             //rak, avoid
             return null;
         }
-        long id = historyRepository.getLastProductId() + 1;
+        long id = historyRepository.getLastProductId();
+        if(products.keySet().size() != 0 && Collections.max(products.keySet()) > id) {
+            id = Collections.max(products.keySet()) + 1;
+        }
+        else {
+            id = id + 1;
+        }
         products.put(id, new ProductEntity(id, type));
         return products.get(id);
     }
@@ -55,13 +59,28 @@ public class ProductRepository {
     }
 
     public ProductEntity putPartIntoProduct(long product, long part) {
-        PartEntity part1 = new PartEntity(partRepository.getPart(part));
-        long idTray = 0L;
+        PartEntity part1 = new PartEntity();
+        long idTray = -1;
+
+        for(Tray tray : trayRepository.getAllTrays(true)) {
+            for(Part parts : tray.getPartsList()) {
+                if(parts.getId() == part) {
+                    part1 = new PartEntity(parts);
+                    idTray = tray.getId();
+                    break;
+                }
+            }
+        }
+
+        if(idTray == -1) {
+            System.out.println("Part is unavailable, make sure that tray with that part is finished.");
+            return products.get(product);
+        }
 
         if(products.get(product).getParts().size() > 0) {
             if(products.get(product).getType().equalsIgnoreCase("Same parts")) {
                 if(products.get(product).getParts().get(0).getType().equalsIgnoreCase(part1.getType())) {
-                    return addHelper(product, part, part1, idTray);
+                    return addHelper(product, part1, idTray);
                 } else {
                     System.out.println("This product requires same type of parts.");
                     return products.get(product);
@@ -73,10 +92,10 @@ public class ProductRepository {
                         return products.get(product);
                     }
                 }
-                return addHelper(product, part, part1, idTray);
+                return addHelper(product, part1, idTray);
             }
         } else {
-            return addHelper(product, part, part1, idTray);
+            return addHelper(product, part1, idTray);
         }
     }
 
@@ -92,18 +111,14 @@ public class ProductRepository {
         return products.get(id);
     }
 
-    private ProductEntity addHelper(long product, long part, PartEntity part1, long idTray) {
-        if(trayRepository.getAllTrays(true).get((int) idTray).getPartsList().contains(part1.convertToPart())) {
-            System.out.println("Part is unavailable, make sure that tray with that part is finished.");
-        }
-
+    private ProductEntity addHelper(long product, PartEntity part1, long idTray) {
         products.get(product).getParts().add(part1);
-        idTray = trayRepository.removeFromTray(part1);
-        products.get(product).getTableOfContents().add(new TOCEntryEntity(idTray, part));
+        TrayEntity tray = trayRepository.removeFromTray(part1);
+        products.get(product).getTableOfContents().add(new TOCEntryEntity(tray.getId(), part1.getId()));
 
         //TODO make get all trays get long instead of int
-        if(trayRepository.getAllTrays(true).get((int) idTray).getPartsList().size() == 0) {
-            trayRepository.trayUnfinished(idTray);
+        if(tray.getParts().size() == 0) {
+            trayRepository.trayUnfinished(tray.getId());
         }
 
         return products.get(product);

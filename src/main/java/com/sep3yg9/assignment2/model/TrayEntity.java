@@ -1,6 +1,5 @@
 package com.sep3yg9.assignment2.model;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,7 +91,7 @@ public class TrayEntity {
         return tray;
     }
 
-    public double getCarriedWeight() {
+    public double totalPartsWeight() {
         double total = 0;
         for(PartEntity part : parts) {
             total += part.getWeight();

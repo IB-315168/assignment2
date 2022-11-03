@@ -1,1 +1,40 @@
-{ }
+{
+  "1" : {
+    "id" : 1,
+    "tableOfContents" : [ {
+      "tray" : 2,
+      "part" : 17
+    } ],
+    "type" : "Same parts",
+    "finished" : true,
+    "parts" : [ {
+      "id" : 17,
+      "animal_id" : 1,
+      "type" : "TORSO",
+      "weight" : 30.0
+    } ]
+  },
+  "2" : {
+    "id" : 2,
+    "tableOfContents" : [ {
+      "tray" : 3,
+      "part" : 20
+    }, {
+      "tray" : 5,
+      "part" : 21
+    } ],
+    "type" : "Half an animal",
+    "finished" : true,
+    "parts" : [ {
+      "id" : 20,
+      "animal_id" : 1,
+      "type" : "TORSO",
+      "weight" : 32.0
+    }, {
+      "id" : 21,
+      "animal_id" : 2,
+      "type" : "BACK_LEGS",
+      "weight" : 45.0
+    } ]
+  }
+}

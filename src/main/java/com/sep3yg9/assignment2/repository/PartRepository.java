@@ -7,10 +7,7 @@ import com.sep3yg9.assignment2.model.TrayEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class PartRepository
@@ -29,7 +26,13 @@ public class PartRepository
     }
 
     public PartEntity createPart(long animal_id, String type, double weight){
-        long id = historyRepository.getLastPartId() + 1;
+        long id = historyRepository.getLastPartId();
+        if(parts.keySet().size() != 0 && Collections.max(parts.keySet()) > id)
+        {
+            id = Collections.max(parts.keySet()) + 1;
+        } else {
+            id = id + 1;
+        }
         if(animalRepository.getAnimal(animal_id) == null) {
             System.out.println("Animal not found");
             return null;

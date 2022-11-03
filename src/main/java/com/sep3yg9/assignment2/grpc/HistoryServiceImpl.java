@@ -25,7 +25,6 @@ public class HistoryServiceImpl extends HistoryServiceGrpc.HistoryServiceImplBas
   @Override
   public void getProductsAnimals(Int64Value id, StreamObserver<AnimalList> responseObserver) {
     List<Long> animalIds = historyRepository.getProductsAnimals(id.getValue());
-
     AnimalList animals = AnimalList.newBuilder()
         .addAllAnimalIds(animalIds)
         .build();

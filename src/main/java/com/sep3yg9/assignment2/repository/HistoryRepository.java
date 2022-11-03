@@ -11,13 +11,11 @@ import org.springframework.stereotype.Repository;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository public class HistoryRepository
 {
+
   private Map<Long, Animal> animals = new HashMap<>();
   private Map<Long, PartEntity> parts = new HashMap<>();
   private Map<Long, ArrayList<TrayEntity>> trays = new HashMap<>();
@@ -42,6 +40,7 @@ import java.util.Map;
 
   public void addNewTray(long id) {
     trays.put(id, new ArrayList<>());
+    saveChanges();
   }
 
   public void addToTrayHistory(TrayEntity entity) {
@@ -105,25 +104,37 @@ import java.util.Map;
   }
 
   public long getLastProductId() {
-    return products.keySet().size() - 1;
+    if(products.size() != 0) {
+      return Collections.max(products.keySet());
+    }
+    return 0;
   }
 
   public long getLastPartId() {
-    return parts.keySet().size() - 1;
+    if(parts.size() != 0) {
+      return Collections.max(parts.keySet());
+    }
+    return 0;
   }
 
   public long getLastTrayId() {
-    return trays.keySet().size() - 1;
+    if(trays.size() != 0) {
+      return Collections.max(trays.keySet());
+    }
+    return 0;
   }
 
   public long getLastAnimalId() {
-    return animals.keySet().size() - 1;
+    if(animals.size() != 0) {
+      return Collections.max(animals.keySet());
+    }
+    return 0;
   }
   private void initDataSource()
   {
     try
     {
-      File partsHistory = new File("./historyfiles/animals.txt");
+      File partsHistory = new File("./assignment2/historyfiles/animals.txt");
       if (!partsHistory.createNewFile())
       {
         animals = mapper.readValue(partsHistory,
@@ -139,7 +150,7 @@ import java.util.Map;
 
     try
     {
-      File partsHistory = new File("./historyfiles/parts.txt");
+      File partsHistory = new File("./assignment2/historyfiles/parts.txt");
       if (!partsHistory.createNewFile())
       {
         parts = mapper.readValue(partsHistory,
@@ -155,7 +166,7 @@ import java.util.Map;
 
     try
     {
-      File traysHistory = new File("./historyfiles/trays.txt");
+      File traysHistory = new File("./assignment2/historyfiles/trays.txt");
       if (!traysHistory.createNewFile())
       {
         trays = mapper.readValue(traysHistory,
@@ -170,7 +181,7 @@ import java.util.Map;
 
     try
     {
-      File productsHistory = new File("./historyfiles/products.txt");
+      File productsHistory = new File("./assignment2/historyfiles/products.txt");
       if (!productsHistory.createNewFile())
       {
         products = mapper.readValue(productsHistory, new TypeReference<HashMap<Long, ProductEntity>>()
@@ -185,7 +196,7 @@ import java.util.Map;
   private void saveChanges() {
     try
     {
-      FileWriter writer = new FileWriter("./historyfiles/animals.txt", false);
+      FileWriter writer = new FileWriter("./assignment2/historyfiles/animals.txt", false);
       String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(animals);
       writer.write(json);
       writer.close();
@@ -197,7 +208,7 @@ import java.util.Map;
 
     try
     {
-      FileWriter writer = new FileWriter("./historyfiles/parts.txt", false);
+      FileWriter writer = new FileWriter("./assignment2/historyfiles/parts.txt", false);
       String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(parts);
       writer.write(json);
       writer.close();
@@ -209,7 +220,7 @@ import java.util.Map;
 
     try
     {
-      FileWriter writer = new FileWriter("./historyfiles/trays.txt", false);
+      FileWriter writer = new FileWriter("./assignment2/historyfiles/trays.txt", false);
       String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(trays);
       writer.write(json);
       writer.close();
@@ -221,7 +232,7 @@ import java.util.Map;
 
     try
     {
-      FileWriter writer = new FileWriter("./historyfiles/products.txt", false);
+      FileWriter writer = new FileWriter("./assignment2/historyfiles/products.txt", false);
       String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(products);
       writer.write(json);
       writer.close();
