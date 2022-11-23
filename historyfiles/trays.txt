@@ -1,1 +1,65 @@
-{ }
+{
+  "0" : [ ],
+  "1" : [ ],
+  "2" : [ {
+    "id" : 2,
+    "max_weight" : 300.0,
+    "finished" : true,
+    "type" : "TORSO",
+    "parts" : [ {
+      "id" : 13,
+      "animal_id" : 13,
+      "type" : "TORSO",
+      "weight" : 19.0
+    } ]
+  }, {
+    "id" : 2,
+    "max_weight" : 300.0,
+    "finished" : false,
+    "type" : "TORSO",
+    "parts" : [ ]
+  } ],
+  "3" : [ {
+    "id" : 3,
+    "max_weight" : 300.0,
+    "finished" : false,
+    "type" : "TORSO",
+    "parts" : [ ]
+  }, {
+    "id" : 3,
+    "max_weight" : 300.0,
+    "finished" : true,
+    "type" : "TORSO",
+    "parts" : [ {
+      "id" : 19,
+      "animal_id" : 2,
+      "type" : "TORSO",
+      "weight" : 19.0
+    } ]
+  }, {
+    "id" : 3,
+    "max_weight" : 300.0,
+    "finished" : false,
+    "type" : "TORSO",
+    "parts" : [ ]
+  } ],
+  "4" : [ {
+    "id" : 4,
+    "max_weight" : 350.0,
+    "finished" : true,
+    "type" : "FRONT_LEGS",
+    "parts" : [ {
+      "id" : 18,
+      "animal_id" : 1,
+      "type" : "FRONT_LEGS",
+      "weight" : 32.0
+    } ]
+  } ],
+  "5" : [ {
+    "id" : 5,
+    "max_weight" : 500.0,
+    "finished" : false,
+    "type" : "BACK_LEGS",
+    "parts" : [ ]
+  } ]
+}

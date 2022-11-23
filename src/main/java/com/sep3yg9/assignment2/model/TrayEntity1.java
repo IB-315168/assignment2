@@ -92,7 +92,7 @@ public class TrayEntity1
         return tray;
     }
 
-    public double getCarriedWeight() {
+    public double totalPartsWeight() {
         double total = 0;
         for(PartEntity1 part : parts) {
             total += part.getWeight();
