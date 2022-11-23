@@ -2,15 +2,16 @@ package com.sep3yg9.assignment2.model;
 
 import com.sep3yg9.assignment2.grpc.protobuf.parts.PartTray;
 
-public class TOCEntryEntity {
+public class TOCEntryEntity1
+{
     private long tray;
     private long part;
 
-    public TOCEntryEntity()
+    public TOCEntryEntity1()
     {
     }
 
-    public TOCEntryEntity(long tray_Id, long part_Id) {
+    public TOCEntryEntity1(long tray_Id, long part_Id) {
         this.tray = tray_Id;
         this.part = part_Id;
     }
@@ -33,8 +34,8 @@ public class TOCEntryEntity {
 
     public PartTray convertToPartTray() {
         PartTray tray1 = PartTray.newBuilder()
-                .setTrayId(tray)
-                .setPartId(part)
+//                .setTrayId(tray)
+//                .setPartId(part)
                 .build();
 
         return tray1;

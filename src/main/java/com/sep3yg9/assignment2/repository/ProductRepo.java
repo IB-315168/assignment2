@@ -12,17 +12,18 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class ProductRepository {
+public class ProductRepo
+{
     @Autowired
-    private TrayRepository trayRepository;
+    private TrayRepo trayRepository;
     @Autowired
-    private PartRepository partRepository;
+    private PartRepo partRepository;
     @Autowired
-    private HistoryRepository historyRepository;
+    private HistoryRepo historyRepository;
 
-    private final Map<Long, ProductEntity> products = new HashMap<>();
+    private final Map<Long, ProductEntity1> products = new HashMap<>();
 
-    public ProductRepository() {
+    public ProductRepo() {
         initDataSource();
     }
 
@@ -30,14 +31,14 @@ public class ProductRepository {
         //put file context for serialization
     }
 
-    public ProductEntity createProduct(String type) {
+    public ProductEntity1 createProduct(String type) {
         if (!(type.equalsIgnoreCase("same parts") || type.equalsIgnoreCase("half an animal"))) {
             System.out.println("Product can be only \"Same parts\" or \"Half an animal\"");
             //rak, avoid
             return null;
         }
         long id = historyRepository.getLastProductId() + 1;
-        products.put(id, new ProductEntity(id, type));
+        products.put(id, new ProductEntity1(id, type));
         return products.get(id);
     }
 
@@ -54,8 +55,8 @@ public class ProductRepository {
         return products1;
     }
 
-    public ProductEntity putPartIntoProduct(long product, long part) {
-        PartEntity part1 = new PartEntity(partRepository.getPart(part));
+    public ProductEntity1 putPartIntoProduct(long product, long part) {
+        PartEntity1 part1 = new PartEntity1(partRepository.getPart(part));
         long idTray = 0L;
 
         if(products.get(product).getParts().size() > 0) {
@@ -67,7 +68,7 @@ public class ProductRepository {
                     return products.get(product);
                 }
             } else {
-                for(PartEntity part2 : products.get(product).getParts()) {
+                for(PartEntity1 part2 : products.get(product).getParts()) {
                     if(part2.getType().equalsIgnoreCase(part1.getType())) {
                         System.out.println("This type of part is already in the product (this product requires single part of every type).");
                         return products.get(product);
@@ -80,7 +81,7 @@ public class ProductRepository {
         }
     }
 
-    public ProductEntity markProductAsFinished(long id) {
+    public ProductEntity1 markProductAsFinished(long id) {
         if(!products.get(id).isFinished() && products.get(id).getParts().size() != 0) {
             products.get(id).setFinished(true);
             historyRepository.addToProductHistory(products.get(id));
@@ -92,14 +93,14 @@ public class ProductRepository {
         return products.get(id);
     }
 
-    private ProductEntity addHelper(long product, long part, PartEntity part1, long idTray) {
+    private ProductEntity1 addHelper(long product, long part, PartEntity1 part1, long idTray) {
         if(trayRepository.getAllTrays(true).get((int) idTray).getPartsList().contains(part1.convertToPart())) {
             System.out.println("Part is unavailable, make sure that tray with that part is finished.");
         }
 
         products.get(product).getParts().add(part1);
         idTray = trayRepository.removeFromTray(part1);
-        products.get(product).getTableOfContents().add(new TOCEntryEntity(idTray, part));
+        products.get(product).getTableOfContents().add(new TOCEntryEntity1(idTray, part));
 
         //TODO make get all trays get long instead of int
         if(trayRepository.getAllTrays(true).get((int) idTray).getPartsList().size() == 0) {

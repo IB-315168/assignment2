@@ -7,20 +7,21 @@ import com.sep3yg9.assignment2.grpc.protobuf.products.Product;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductEntity {
+public class ProductEntity1
+{
     private long id;
-    private ArrayList<TOCEntryEntity> tableOfContents;
+    private ArrayList<TOCEntryEntity1> tableOfContents;
 
     private String type;
 
     private boolean finished;
-    private ArrayList<PartEntity> parts;
+    private ArrayList<PartEntity1> parts;
 
-    public ProductEntity()
+    public ProductEntity1()
     {
     }
 
-    public ProductEntity(long id, String type) {
+    public ProductEntity1(long id, String type) {
         this.id = id;
         this.type = type;
         this.finished = false;
@@ -36,11 +37,11 @@ public class ProductEntity {
         this.id = id;
     }
 
-    public ArrayList<TOCEntryEntity> getTableOfContents() {
+    public ArrayList<TOCEntryEntity1> getTableOfContents() {
         return tableOfContents;
     }
 
-    public void addContent(TOCEntryEntity entry){
+    public void addContent(TOCEntryEntity1 entry){
         tableOfContents.add(entry);
     }
 
@@ -56,26 +57,26 @@ public class ProductEntity {
         return type;
     }
 
-    public ArrayList<PartEntity> getParts() {
+    public ArrayList<PartEntity1> getParts() {
         return parts;
     }
 
-    public void setParts(ArrayList<PartEntity> parts) {
+    public void setParts(ArrayList<PartEntity1> parts) {
         this.parts = parts;
     }
 
     public Product convertToProduct() {
         List<PartTray> toc = new ArrayList<>();
-        for(TOCEntryEntity entry : tableOfContents) {
+        for(TOCEntryEntity1 entry : tableOfContents) {
             toc.add(entry.convertToPartTray());
         }
         List<Part> parts1 = new ArrayList<>();
-        for(PartEntity part : parts) {
+        for(PartEntity1 part : parts) {
             parts1.add(part.convertToPart());
         }
 
         Product product = Product.newBuilder()
-                .setId(id)
+//                .setId(id)
                 .setProductType(type)
                 .setFinished(finished)
                 .addAllToc(toc)

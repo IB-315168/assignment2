@@ -6,7 +6,7 @@ option java_multiple_files = true;
 package com.sep3yg9.assignment2.grpc.protobuf.trays;
 
 message Tray {
-  int64 id = 1;
+  int32 id = 1;
   double max_weight = 2;
   bool finished = 3;
   string type = 4;
@@ -21,5 +21,5 @@ service TrayService {
   rpc CreateTray(Tray) returns (Tray);
   rpc GetAllTrays(google.protobuf.Empty) returns (TrayList);
   rpc PutOnTray(com.sep3yg9.assignment2.grpc.protobuf.parts.PartTray) returns (Tray);
-  rpc TrayFinished(google.protobuf.Int64Value) returns (Tray);
+  rpc TrayFinished(google.protobuf.Int32Value) returns (Tray);
 }

@@ -1,8 +1,8 @@
 package com.sep3yg9.assignment2.repository;
 
 import com.sep3yg9.assignment2.grpc.protobuf.trays.Tray;
-import com.sep3yg9.assignment2.model.PartEntity;
-import com.sep3yg9.assignment2.model.TrayEntity;
+import com.sep3yg9.assignment2.model.PartEntity1;
+import com.sep3yg9.assignment2.model.TrayEntity1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -13,43 +13,43 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class TrayRepository
+public class TrayRepo
 {
 
     @Autowired
-    private PartRepository partRepository;
+    private PartRepo partRepository;
     @Autowired
-    private HistoryRepository historyRepository;
+    private HistoryRepo historyRepository;
 
-    private Map<Long, TrayEntity> trays;
+    private Map<Long, TrayEntity1> trays;
 
-    public TrayRepository() {
+    public TrayRepo() {
     }
 
     //We assume that trays properties won't change over time, i.e. maxWeight
     @PostConstruct
     private void initDataSource() {
-        Map<Long, TrayEntity> trayList = new HashMap<>();
+        Map<Long, TrayEntity1> trayList = new HashMap<>();
         if(historyRepository.getTrays() != null && !historyRepository.getTrays().isEmpty()) {
             for(long id : historyRepository.getTrays().keySet()) {
                 if(historyRepository.getTrays().get(id).size() != 0) {
-                    TrayEntity tray = historyRepository.getTrays().get(id).get(0);
-                    trayList.put(id, new TrayEntity(id, tray.getMax_weight(), false, tray.getType()));
+                    TrayEntity1 tray = historyRepository.getTrays().get(id).get(0);
+                    trayList.put(id, new TrayEntity1(id, tray.getMax_weight(), false, tray.getType()));
                 }
             }
         }
         trays = trayList;
     }
 
-    public TrayEntity createTray(double maxWeight, boolean isFinished, String type){
+    public TrayEntity1 createTray(double maxWeight, boolean isFinished, String type){
         long id = historyRepository.getLastTrayId() + 1;
-        trays.put(id, new TrayEntity(id, maxWeight, isFinished, type));
+        trays.put(id, new TrayEntity1(id, maxWeight, isFinished, type));
         historyRepository.addNewTray(id);
         return trays.get(id);
     }
 
-    public TrayEntity putPartIntoTray(long tray, long part){
-        PartEntity part1 = new PartEntity(partRepository.getPart(part));
+    public TrayEntity1 putPartIntoTray(long tray, long part){
+        PartEntity1 part1 = new PartEntity1(partRepository.getPart(part));
         System.out.println(trays.get(tray));
         if(trays.get(tray).getParts().size() == 0){
             if(!trayChecks(tray, part1)) {
@@ -102,7 +102,7 @@ public class TrayRepository
         }
     }
 
-    public long removeFromTray(PartEntity part) {
+    public long removeFromTray(PartEntity1 part) {
         for(long id : trays.keySet()) {
             if(trays.get(id).isFinished()) {
                 if(trays.get(id).getParts().contains(part)) {
@@ -114,8 +114,8 @@ public class TrayRepository
         return 0;
     }
 
-    private boolean trayChecks(long id, PartEntity part) {
-        TrayEntity tray = trays.get(id);
+    private boolean trayChecks(long id, PartEntity1 part) {
+        TrayEntity1 tray = trays.get(id);
 
         if(tray.isFinished()) {
             return false;

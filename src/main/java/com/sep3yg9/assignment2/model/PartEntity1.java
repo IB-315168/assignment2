@@ -4,24 +4,25 @@ import com.sep3yg9.assignment2.grpc.protobuf.parts.Part;
 
 import java.util.Objects;
 
-public class PartEntity {
+public class PartEntity1
+{
     private long id;
     private long animal_id;
     private String type;
     private double weight;
 
-    public PartEntity()
+    public PartEntity1()
     {
     }
 
-    public PartEntity(long id, long animal_id, String type, double weight) {
+    public PartEntity1(long id, long animal_id, String type, double weight) {
         this.id = id;
         this.animal_id = animal_id;
         this.type = type;
         this.weight = weight;
     }
 
-    public PartEntity(Part part) {
+    public PartEntity1(Part part) {
         this.id = part.getId();
         this.animal_id = part.getAnimalId();
         this.type = part.getType();
@@ -62,8 +63,8 @@ public class PartEntity {
 
     public Part convertToPart() {
         Part part = Part.newBuilder()
-                .setId(id)
-                .setAnimalId(id)
+//                .setId(id)
+//                .setAnimalId(id)
                 .setType(type)
                 .setWeight(weight)
                 .build();
@@ -76,7 +77,7 @@ public class PartEntity {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        PartEntity that = (PartEntity) o;
+        PartEntity1 that = (PartEntity1) o;
         return id == that.id && animal_id == that.animal_id
             && Double.compare(that.weight, weight) == 0 && Objects.equals(type,
             that.type);

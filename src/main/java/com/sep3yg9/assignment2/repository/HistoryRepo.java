@@ -3,29 +3,28 @@ package com.sep3yg9.assignment2.repository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sep3yg9.assignment2.model.Animal;
-import com.sep3yg9.assignment2.model.PartEntity;
-import com.sep3yg9.assignment2.model.ProductEntity;
-import com.sep3yg9.assignment2.model.TrayEntity;
+import com.sep3yg9.assignment2.model.PartEntity1;
+import com.sep3yg9.assignment2.model.ProductEntity1;
+import com.sep3yg9.assignment2.model.TrayEntity1;
 import org.springframework.stereotype.Repository;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Repository public class HistoryRepository
+@Repository public class HistoryRepo
 {
   private Map<Long, Animal> animals = new HashMap<>();
-  private Map<Long, PartEntity> parts = new HashMap<>();
-  private Map<Long, ArrayList<TrayEntity>> trays = new HashMap<>();
-  private Map<Long, ProductEntity> products = new HashMap<>();
+  private Map<Long, PartEntity1> parts = new HashMap<>();
+  private Map<Long, ArrayList<TrayEntity1>> trays = new HashMap<>();
+  private Map<Long, ProductEntity1> products = new HashMap<>();
 
   private final ObjectMapper mapper = new ObjectMapper();
 
-  public HistoryRepository()
+  public HistoryRepo()
   {
     initDataSource();
   }
@@ -35,7 +34,7 @@ import java.util.Map;
     saveChanges();
   }
 
-  public void addToPartHistory(PartEntity entity) {
+  public void addToPartHistory(PartEntity1 entity) {
     parts.put(entity.getId(), entity);
     saveChanges();
   }
@@ -44,12 +43,12 @@ import java.util.Map;
     trays.put(id, new ArrayList<>());
   }
 
-  public void addToTrayHistory(TrayEntity entity) {
+  public void addToTrayHistory(TrayEntity1 entity) {
     trays.get(entity.getId()).add(entity);
     saveChanges();
   }
 
-  public void addToProductHistory(ProductEntity entity) {
+  public void addToProductHistory(ProductEntity1 entity) {
     products.put(entity.getId(), entity);
     saveChanges();
   }
@@ -59,36 +58,36 @@ import java.util.Map;
     return animals;
   }
 
-  public Map<Long, PartEntity> getParts()
+  public Map<Long, PartEntity1> getParts()
   {
     return parts;
   }
 
-  public Map<Long, ArrayList<TrayEntity>> getTrays()
+  public Map<Long, ArrayList<TrayEntity1>> getTrays()
   {
     return trays;
   }
 
-  public Map<Long, ProductEntity> getProducts()
+  public Map<Long, ProductEntity1> getProducts()
   {
     return products;
   }
 
   public List<Long> getProductsAnimals(long id) {
     List<Long> animalIds = new ArrayList<>();
-    ProductEntity product = products.get(id);
+    ProductEntity1 product = products.get(id);
 
-    for(PartEntity part : product.getParts()) {
+    for(PartEntity1 part : product.getParts()) {
       animalIds.add(part.getAnimal_id());
     }
 
     return animalIds;
   }
 
-  public List<ProductEntity> getAnimalsProducts(long id) {
-    List<ProductEntity> productEntityList = new ArrayList<>();
+  public List<ProductEntity1> getAnimalsProducts(long id) {
+    List<ProductEntity1> productEntityList = new ArrayList<>();
 
-    List<PartEntity> selectedParts = new ArrayList<>();
+    List<PartEntity1> selectedParts = new ArrayList<>();
     for(long idPart : parts.keySet()) {
       if(parts.get(idPart).getAnimal_id() == id) {
         selectedParts.add(parts.get(idPart));
@@ -143,7 +142,7 @@ import java.util.Map;
       if (!partsHistory.createNewFile())
       {
         parts = mapper.readValue(partsHistory,
-            new TypeReference<HashMap<Long, PartEntity>>()
+            new TypeReference<HashMap<Long, PartEntity1>>()
             {
             });
       }
@@ -159,7 +158,7 @@ import java.util.Map;
       if (!traysHistory.createNewFile())
       {
         trays = mapper.readValue(traysHistory,
-            new TypeReference<HashMap<Long, ArrayList<TrayEntity>>>()
+            new TypeReference<HashMap<Long, ArrayList<TrayEntity1>>>()
             {
             });
       }
@@ -173,7 +172,7 @@ import java.util.Map;
       File productsHistory = new File("./historyfiles/products.txt");
       if (!productsHistory.createNewFile())
       {
-        products = mapper.readValue(productsHistory, new TypeReference<HashMap<Long, ProductEntity>>()
+        products = mapper.readValue(productsHistory, new TypeReference<HashMap<Long, ProductEntity1>>()
         {
         });
       }
