@@ -1,6 +1,6 @@
 package com.sep3yg9.assignment2.repository;
 
-import com.sep3yg9.assignment2.model.dbentities.TrayEntity;
+import com.sep3yg9.assignment2.model.TrayEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

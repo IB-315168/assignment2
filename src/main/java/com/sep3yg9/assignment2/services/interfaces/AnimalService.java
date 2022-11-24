@@ -1,6 +1,6 @@
 package com.sep3yg9.assignment2.services.interfaces;
 
-import com.sep3yg9.assignment2.model.dbentities.AnimalEntity;
+import com.sep3yg9.assignment2.model.AnimalEntity;
 
 import java.time.LocalDate;
 import java.util.List;

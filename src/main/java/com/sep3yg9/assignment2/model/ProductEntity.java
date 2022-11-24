@@ -1,6 +1,5 @@
-package com.sep3yg9.assignment2.model.dbentities;
+package com.sep3yg9.assignment2.model;
 
-import com.sep3yg9.assignment2.grpc.protobuf.parts.Part;
 import com.sep3yg9.assignment2.grpc.protobuf.parts.PartTray;
 import com.sep3yg9.assignment2.grpc.protobuf.products.Product;
 import com.sep3yg9.assignment2.model.PartEntity1;

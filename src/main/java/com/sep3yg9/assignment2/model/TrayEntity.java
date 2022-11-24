@@ -1,4 +1,4 @@
-package com.sep3yg9.assignment2.model.dbentities;
+package com.sep3yg9.assignment2.model;
 
 import com.sep3yg9.assignment2.grpc.protobuf.parts.Part;
 import com.sep3yg9.assignment2.grpc.protobuf.trays.Tray;
@@ -77,6 +77,16 @@ import java.util.Set;
   public void setType(String type)
   {
     this.type = type;
+  }
+
+  public double checkCarriedWeight() {
+    double totalWeight = 0.0;
+
+    for(Parttray part : parttrays) {
+      totalWeight += part.getIdpart().getWeight();
+    }
+
+    return totalWeight;
   }
 
   public Tray convertToTray() {

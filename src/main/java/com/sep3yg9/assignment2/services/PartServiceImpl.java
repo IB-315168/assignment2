@@ -1,6 +1,6 @@
 package com.sep3yg9.assignment2.services;
 
-import com.sep3yg9.assignment2.model.dbentities.PartEntity;
+import com.sep3yg9.assignment2.model.PartEntity;
 import com.sep3yg9.assignment2.repository.PartRepository;
 import com.sep3yg9.assignment2.services.interfaces.PartService;
 import org.springframework.stereotype.Service;

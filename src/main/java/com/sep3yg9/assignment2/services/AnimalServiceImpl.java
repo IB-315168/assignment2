@@ -1,6 +1,6 @@
 package com.sep3yg9.assignment2.services;
 
-import com.sep3yg9.assignment2.model.dbentities.AnimalEntity;
+import com.sep3yg9.assignment2.model.AnimalEntity;
 import com.sep3yg9.assignment2.repository.AnimalRepository;
 import org.springframework.stereotype.Service;
 

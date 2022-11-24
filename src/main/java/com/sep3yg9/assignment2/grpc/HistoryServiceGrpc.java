@@ -4,7 +4,7 @@ import com.google.protobuf.Int32Value;
 import com.sep3yg9.assignment2.grpc.protobuf.products.AnimalList;
 import com.sep3yg9.assignment2.grpc.protobuf.products.Product;
 import com.sep3yg9.assignment2.grpc.protobuf.products.ProductList;
-import com.sep3yg9.assignment2.model.dbentities.ProductEntity;
+import com.sep3yg9.assignment2.model.ProductEntity;
 import com.sep3yg9.assignment2.services.HistoryServiceImpl;
 import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;

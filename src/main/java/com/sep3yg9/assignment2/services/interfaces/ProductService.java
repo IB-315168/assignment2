@@ -1,8 +1,7 @@
 package com.sep3yg9.assignment2.services.interfaces;
 
-import com.sep3yg9.assignment2.grpc.protobuf.products.PartProduct;
-import com.sep3yg9.assignment2.model.dbentities.ProductEntity;
-import com.sep3yg9.assignment2.model.dbentities.TrayEntity;
+import com.sep3yg9.assignment2.model.ProductEntity;
+import com.sep3yg9.assignment2.model.TrayEntity;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.sep3yg9.assignment2.controller;
 
-import com.sep3yg9.assignment2.model.dbentities.AnimalEntity;
+import com.sep3yg9.assignment2.model.AnimalEntity;
 import com.sep3yg9.assignment2.services.interfaces.AnimalService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,7 @@
 package com.sep3yg9.assignment2.repository;
 
-import com.sep3yg9.assignment2.model.dbentities.AnimalEntity;
-import com.sep3yg9.assignment2.model.dbentities.ProductEntity;
+import com.sep3yg9.assignment2.model.AnimalEntity;
+import com.sep3yg9.assignment2.model.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

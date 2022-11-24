@@ -1,8 +1,8 @@
 package com.sep3yg9.assignment2.services;
 
-import com.sep3yg9.assignment2.model.dbentities.AnimalEntity;
-import com.sep3yg9.assignment2.model.dbentities.ProductEntity;
-import com.sep3yg9.assignment2.model.dbentities.TocentryEntity;
+import com.sep3yg9.assignment2.model.AnimalEntity;
+import com.sep3yg9.assignment2.model.ProductEntity;
+import com.sep3yg9.assignment2.model.TocentryEntity;
 import com.sep3yg9.assignment2.repository.AnimalRepository;
 import com.sep3yg9.assignment2.repository.ProductEntityRepository;
 import com.sep3yg9.assignment2.services.interfaces.HistoryService;

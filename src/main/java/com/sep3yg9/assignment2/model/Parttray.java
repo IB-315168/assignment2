@@ -1,4 +1,4 @@
-package com.sep3yg9.assignment2.model.dbentities;
+package com.sep3yg9.assignment2.model;
 
 import javax.persistence.*;
 

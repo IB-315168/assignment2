@@ -1,10 +1,9 @@
 package com.sep3yg9.assignment2.services;
 
-import com.sep3yg9.assignment2.grpc.protobuf.products.PartProduct;
-import com.sep3yg9.assignment2.model.dbentities.PartEntity;
-import com.sep3yg9.assignment2.model.dbentities.ProductEntity;
-import com.sep3yg9.assignment2.model.dbentities.TocentryEntity;
-import com.sep3yg9.assignment2.model.dbentities.TrayEntity;
+import com.sep3yg9.assignment2.model.PartEntity;
+import com.sep3yg9.assignment2.model.ProductEntity;
+import com.sep3yg9.assignment2.model.TocentryEntity;
+import com.sep3yg9.assignment2.model.TrayEntity;
 import com.sep3yg9.assignment2.repository.PartRepository;
 import com.sep3yg9.assignment2.repository.ProductEntityRepository;
 import com.sep3yg9.assignment2.repository.TocentryEntityRepository;
@@ -33,6 +32,10 @@ public class ProductServiceImpl implements ProductService
 
   @Override public ProductEntity create(ProductEntity productEntity)
   {
+    if(!(productEntity.getType().equalsIgnoreCase("same parts") || productEntity.getType().equalsIgnoreCase("half an animal"))) {
+      throw new IllegalArgumentException("Product must be of either \"Same parts\" or \"Half an animal type\"");
+    }
+
     return productEntityRepository.save(productEntity);
   }
 
@@ -70,6 +73,22 @@ public class ProductServiceImpl implements ProductService
 
     if(!trayEntity.get().getFinished()) {
       throw new IllegalArgumentException("Tray is not finished");
+    }
+
+    if(product.getType().equalsIgnoreCase("same parts")) {
+      if(product.getTocentries().size() != 0) {
+        if(!product.getTocentries().stream().toList().get(0).getIdpart().getType().equalsIgnoreCase(part.getType())) {
+          throw new IllegalArgumentException("This product requires same type of parts");
+        }
+      }
+    } else {
+      if(product.getTocentries().size() != 0) {
+        for(TocentryEntity toc : product.getTocentries()) {
+          if(toc.getIdpart().getType().equalsIgnoreCase(part.getType())) {
+            throw new IllegalArgumentException("This product requires that there is only one item of each type");
+          }
+        }
+      }
     }
 
     TrayEntity tray = trayEntity.get();

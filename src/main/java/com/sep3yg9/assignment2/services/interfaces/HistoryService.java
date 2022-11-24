@@ -1,7 +1,7 @@
 package com.sep3yg9.assignment2.services.interfaces;
 
 import com.sep3yg9.assignment2.model.ProductEntity1;
-import com.sep3yg9.assignment2.model.dbentities.ProductEntity;
+import com.sep3yg9.assignment2.model.ProductEntity;
 
 import java.util.List;
 

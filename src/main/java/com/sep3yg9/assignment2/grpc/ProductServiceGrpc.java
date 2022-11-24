@@ -2,7 +2,6 @@ package com.sep3yg9.assignment2.grpc;
 
 import com.google.protobuf.Empty;
 import com.google.protobuf.Int32Value;
-import com.google.protobuf.Int64Value;
 import com.google.protobuf.StringValue;
 import com.sep3yg9.assignment2.grpc.protobuf.products.PartProduct;
 import com.sep3yg9.assignment2.grpc.protobuf.products.Product;
@@ -10,14 +9,13 @@ import com.sep3yg9.assignment2.grpc.protobuf.products.ProductList;
 import com.sep3yg9.assignment2.grpc.protobuf.trays.Tray;
 import com.sep3yg9.assignment2.grpc.protobuf.trays.TrayList;
 import com.sep3yg9.assignment2.model.ProductEntity1;
-import com.sep3yg9.assignment2.model.dbentities.ProductEntity;
-import com.sep3yg9.assignment2.model.dbentities.TrayEntity;
+import com.sep3yg9.assignment2.model.ProductEntity;
+import com.sep3yg9.assignment2.model.TrayEntity;
 import com.sep3yg9.assignment2.repository.ProductRepo;
 import com.sep3yg9.assignment2.services.interfaces.ProductService;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;

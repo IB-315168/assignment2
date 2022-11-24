@@ -1,7 +1,7 @@
 package com.sep3yg9.assignment2.services;
 
-import com.sep3yg9.assignment2.model.dbentities.PartEntity;
-import com.sep3yg9.assignment2.model.dbentities.TrayEntity;
+import com.sep3yg9.assignment2.model.PartEntity;
+import com.sep3yg9.assignment2.model.TrayEntity;
 import com.sep3yg9.assignment2.repository.PartRepository;
 import com.sep3yg9.assignment2.repository.TrayEntityRepository;
 import com.sep3yg9.assignment2.services.interfaces.TrayService;
@@ -52,11 +52,12 @@ public class TrayServiceImpl implements TrayService
     if(trayEntity.isEmpty()) {
       throw new IllegalArgumentException("Tray does not exist");
     }
-    if(trayEntity.get().getFinished()) {
-      throw new IllegalArgumentException("Tray is already finished");
-    }
 
     TrayEntity tray = trayEntity.get();
+
+    if(tray.getFinished()) {
+      throw new IllegalArgumentException("Tray is already finished");
+    }
 
     Optional<PartEntity> partEntity = partRepository.findById(partId);
 
@@ -66,6 +67,14 @@ public class TrayServiceImpl implements TrayService
 
     if(partEntity.get().getFinished()) {
       throw new IllegalArgumentException("Part is already on a tray");
+    }
+
+    if(!tray.getType().equalsIgnoreCase(partEntity.get().getType())) {
+      throw new IllegalArgumentException("Part type does not match tray type");
+    }
+
+    if(tray.checkCarriedWeight() + partEntity.get().getWeight() > tray.getMaxweight()) {
+      throw new IllegalArgumentException("This part is too heavy to fit on this tray");
     }
 
     partEntity.get().setFinished(true);
